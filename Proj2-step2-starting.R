@@ -65,37 +65,75 @@ pone<-function(n,k,strategy,nreps=10000){
   }
 }
 
-result=pone(50,4,1)
-
 
 ###############################################################################2nd function#########################################################
 
 
 
-pall=function(n,strategy,nreps){
-  total_prob=1
-  if(strategy==1){
-  for (prisoner_no in 1:2*n) {
-    each_prisoner_prob=pone(50,prisoner_no,1)
-    total_prob=total_prob*each_prisoner_prob
-  }
-  if(total_prob==0)
-    {print("All prisoners are not released")}
-  else
-    {print("All prisoners are released with probability:")
-     cat(total_prob)
+#pall=function(n,strategy,nreps){
+#  i=1
+ # total_prob=1
+#  count=0
+ # total_prob_in_each_Simulation=rep(0,nreps)
+  #while(i<nreps+1)
+   # {
+    #  if(strategy==1){
+     # for (prisoner_no in 1:2*n) {
+      #  each_prisoner_prob=pone(50,prisoner_no,strategy,i)
+       # \
+      #}
+      #if(total_prob==0)
+      #{print("All prisoners are not released")
+      #  total_prob_in_each_Simulation[i]=NA}
+      #else
+      #  {print("All prisoners are released with probability:")
+          
+       #   if(i==1){
+        #     total_prob_in_each_Simulation[i]=total_prob
+         # }
+        #  else{total_prob_in_each_Simulation[i]=sum(total_prob_in_each_Simulation[-i]-total_prob)
+         # }
+            
+        #i=i+1
+         
+        #}
+        #cat(total_prob_in_each_Simulation)
+  #  }
+#  }
+#} 
+  
+  
+  
+#################################################################################  
+  
+pall=function(n,strategy,nreps){ 
+  i=1
+  count=0
+  while(i<nreps+1)
+  {
+    total_prob=1
+    for(prisoner_no in 1:2*n)
+    {
+      each_prisoner_prob=pone(50,prisoner_no,strategy,i)
+      total_prob=total_prob*each_prisoner_prob
+      
     }
-  
-}}
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    if(total_prob!=0)
+    {
+      cat(each_prisoner_prob)
+      count=count+1
+     }
+    else
+     {
+       #cat("all prisoner not released in simulation",i)
+       
+     }
+    i=i+1
+  }
+  total_probability=count/nreps
+  cat("total_probability",total_probability)
+  }
+
   
   
   
