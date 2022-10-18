@@ -176,6 +176,7 @@ dloop <- function(n, nreps) {
       currentLength = 0 #variable to keep a track of loop length
       currentCard = cardsInBoxes[box] 
       maxIterations = n #maximum number of boxes we can open
+      
       while(currentCard != box && maxIterations > 0) {
         #since current card number is not equal to box number, we increase length of loop by 1
         currentCard = cardsInBoxes[currentCard]
