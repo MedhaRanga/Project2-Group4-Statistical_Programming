@@ -154,3 +154,23 @@ print(Pone(50, 4, 3, 10000))
 print(Pall(50, 1, 10000))
 print(Pall(50, 2, 10000))
 print(Pall(50, 3, 10000))
+
+
+dloop <- function(n, nreps) {
+  # Function to to estimate, by simulation, the probability of each loop length from 1 to 2n 
+  # occurring at least once in a random shuffling of cards to boxes
+  
+  #Arguements
+  #n - number of boxes that can be opened
+  #nreps - number of simulations
+  times_Vector <- rep(0, (2*n)) #empty vector to store probabilites. Initialised each element to 0 
+  for(rep in 1:nreps) {  
+    cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE)) 
+    #vector of length 2n with index representing the box number and the 
+    #corresponding element representing the card number inside
+    cycleLengthFound <- rep(F, (2*n))
+    #vector to check whether a loop of specific length has been found or not. Initialised each element to 'F'(False)
+    for(box in 1:(2*n)) {
+      currentLength = 0 #variable to keep a track of loop length
+      currentCard = cardsInBoxes[box] 
+      maxIterations = n #maximum number of boxes we can open
