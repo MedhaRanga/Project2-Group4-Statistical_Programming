@@ -174,3 +174,30 @@ dloop <- function(n, nreps) {
       currentLength = 0 #variable to keep a track of loop length
       currentCard = cardsInBoxes[box] 
       maxIterations = n #maximum number of boxes we can open
+      while(currentCard != box && maxIterations > 0) {
+        #since current card number is not equal to box number, we increase length of loop by 1
+        currentCard = cardsInBoxes[currentCard]
+        currentLength = currentLength + 1 #increase length by 1
+        maxIterations = maxIterations - 1 #decrease iterations by 1 becasue 1 box has been opened
+      }
+      if(currentLength != 0) {
+        cycleLengthFound[currentLength] = TRUE 
+      }
+    }
+    for(i in 1:(2*n)) {
+      if(cycleLengthFound[i]) { 
+        times_Vector[i] = times_Vector[i] + 1 #increase the count of that specific loop length
+      }
+    }
+  }
+  probabilityVector <- c(rep(0, (2*n)))
+  for(i in 1:(2*n)) {
+    probabilityVector[i] = times_Vector[i]/nreps #prob = success/total number of obs
+    #in this proob = (count of specific loop length)/(total number of simulations)
+  }
+  return (probabilityVector)
+}
+x<-c(1:100)
+p = dloop(50,100)
+print(p)
+plot(x,p)
