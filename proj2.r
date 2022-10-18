@@ -156,10 +156,12 @@ print(Pall(50, 2, 10000))
 print(Pall(50, 3, 10000))
 
 
+
 dloop <- function(n, nreps) {
   # Function to to estimate, by simulation, the probability of each loop length from 1 to 2n 
   # occurring at least once in a random shuffling of cards to boxes
   
+
   #Arguements
   #n - number of boxes that can be opened
   #nreps - number of simulations
@@ -201,3 +203,4 @@ x<-c(1:100)
 p = dloop(50,100)
 print(p)
 plot(x,p)
+
