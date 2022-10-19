@@ -2,49 +2,49 @@
 
 
 #function for stratergy1
-stratergy1=function(cardsInBoxes,k,n,freePrisoners)
+stratergy1=function(cardsInBoxes,k,n,free)
 {
   currentCard = cardsInBoxes[k];
   for(i in 1:n) {
     if(currentCard == k) { 
-      freePrisoners = freePrisoners+1
+      free = free+1
       break
     }
     else { 
       currentCard = cardsInBoxes[currentCard] 
     }
   }
-  return(freePrisoners)
+  return(free)
 }
 
 
 #function for stratergy2
-stratergy2=function(cardsInBoxes,k,n,freePrisoners)
+stratergy2=function(cardsInBoxes,k,n,free)
 { 
   startingBox = sample(1: (2*n), 1) 
   currentCard = cardsInBoxes[startingBox]
   for(i in 1:n) {
     if(k == currentCard) { 
-      freePrisoners = freePrisoners+1 
+      free = free+1 
       break
     }
     else {
       currentCard = cardsInBoxes[currentCard]
     }
   }
-  return(freePrisoners)
+  return(free)
 }
 
 
 #function for stratergy3
-stratergy3=function(cardsInBoxes,k,n,freePrisoners)
+stratergy3=function(cardsInBoxes,k,n,free)
 {
-  nRandomBoxes = c(sample(1 : (2*n), n, replace = FALSE))
-  for(box in nRandomBoxes) 
+  Random_Boxes = c(sample(1 : (2*n), n, replace = FALSE))
+  for(box in Random_Boxes) 
     {
       if(cardsInBoxes[box] == k) 
         { 
-          freePrisoners = freePrisoners + 1
+        free = free + 1
           break
         }
     }
@@ -53,16 +53,16 @@ stratergy3=function(cardsInBoxes,k,n,freePrisoners)
 #####################################################################################################################################################
 Pone <- function(n, k, strategy, nreps) 
 {
-  freePrisoners = 0
+  free = 0
   
   if(strategy == 1) 
     {
       for(rep in 1:nreps) 
         {
           cardsInBoxes = c(sample(1 : (2*n), 2*n, replace = FALSE))
-          freePrisoners=stratergy1(cardsInBoxes,k,n,freePrisoners)
+          free=stratergy1(cardsInBoxes,k,n,free)
         }
-      return(freePrisoners/nreps)
+      return(free/nreps)
     }
   
   else if(strategy == 2)
@@ -70,9 +70,9 @@ Pone <- function(n, k, strategy, nreps)
       for(rep in 1:nreps) 
         {
           cardsInBoxes = c(sample(1 : (2*n), 2*n, replace = FALSE))
-          freePrisoners=stratergy2(cardsInBoxes,k,n,freePrisoners)
+          free=stratergy2(cardsInBoxes,k,n,free)
         }
-      return(freePrisoners/nreps)
+      return(free/nreps)
     }
   
   else if(strategy == 3)
@@ -80,9 +80,9 @@ Pone <- function(n, k, strategy, nreps)
       for(rep in 1:nreps) 
         {
           cardsInBoxes = c(sample(1 : (2*n), 2*n, replace = FALSE))
-          freePrisoners=stratergy3(cardsInBoxes,k,n,freePrisoners)
+          free=stratergy3(cardsInBoxes,k,n,free)
         }
-      return (freePrisoners/nreps)
+      return (free/nreps)
     }
   
   else 
@@ -101,12 +101,12 @@ Pall <- function(n, strategy, nreps) {
       for(rep in 1:nreps) 
         {
           cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE))
-          freePrisoners = 0
+          free = 0
           for(prisoner in 1: (2*n)) 
             {
-            freePrisoners=stratergy1(cardsInBoxes,prisoner,n,freePrisoners)
+            free=stratergy1(cardsInBoxes,prisoner,n,free)
             }
-          if(freePrisoners == (2*n)) 
+          if(free == (2*n)) 
             {
             allPrisonersFree = allPrisonersFree + 1
             }
@@ -118,12 +118,12 @@ Pall <- function(n, strategy, nreps) {
       for(rep in 1:nreps) 
         {
           cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE))
-          freePrisoners = 0
+          free = 0
           for(prisoner in 1: (2*n)) 
             {
-            freePrisoners=stratergy2(cardsInBoxes,prisoner,n,freePrisoners)
+            free=stratergy2(cardsInBoxes,prisoner,n,free)
             }
-          if(freePrisoners == (2*n)) {
+          if(free == (2*n)) {
             allPrisonersFree = allPrisonersFree + 1
             }
         }
@@ -135,12 +135,12 @@ Pall <- function(n, strategy, nreps) {
       for(rep in 1:nreps) 
         {
           cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE))
-          freePrisoners = 0
+          free = 0
           for(prisoner in 1:(2*n)) 
             {
-            freePrisoners=stratergy3(cardsInBoxes,prisoner,n,freePrisoners)
+            free=stratergy3(cardsInBoxes,prisoner,n,free)
             }
-          if(freePrisoners == (2*n)) 
+          if(free == (2*n)) 
             {
             allPrisonersFree = allPrisonersFree + 1
             }
@@ -154,7 +154,7 @@ Pall <- function(n, strategy, nreps) {
 
 ####################################################################################################################################################
 
-dloop=function(n,nreps=1000)
+dloop=function(n,nreps=10000)
 { result_vector=array(0,dim=(2*n))
 for(rep in 1:nreps) {
   cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE))
