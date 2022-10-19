@@ -1,6 +1,5 @@
 #1.   
 # Function to find P(single prisoner succeeding in finding their number)  
-
 Pone <- function(n, k, strategy, nreps) {
   Success_count = 0 
   if(strategy == 1){
@@ -59,9 +58,9 @@ Pone <- function(n, k, strategy, nreps) {
   }
 }
 
+
 #2. 
 # Function to find P(all prisoners finding their number and getting free) 
-
 Pall <- function(n, strategy, nreps) {
   all_Free = 0 
   if(strategy == 1) {
