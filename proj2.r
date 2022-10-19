@@ -177,10 +177,19 @@ print(Pall(50, 3, 10000))
 
 #--------------------------------------Question 4-------------------------------------------
 
-
-
-
-
+# --> The probability of all prisoners escaping is higher in statergy 1 than rest.
+# 
+# -->This is because in stratergy 1, prisoner opens box in a loop until he finds a box with his card number(prisoner number).Each box will point to unique another box.
+#    As prisoner starts with his numbered box, the loop will definately contain his card number.
+#    For example, if there are "2n" boxes and prisoner can only open "n" boxes, in order to be successesful the maximum loop length should be less than "n".
+#    If its unsuccessful there can be only one loop with length greater than "n", other must be less than "n" in total.
+#
+#     pr(success)= 1 - pr(loop length >= "n")
+# 
+# -->In stratergy 2 loop is formed, but since prisoner starts with a random box, there is no guarentee that he finds his number in that loop.
+#    Finally, in strategy 3, the selection of boxes is completely random with no loop formation, hence both stratergies have low probability.
+#
+#
 
 #--------------------------------------Question 5-------------------------------------------
 dloop <- function(n, nreps) {
