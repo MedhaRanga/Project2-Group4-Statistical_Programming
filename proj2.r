@@ -1,12 +1,16 @@
+#-----------------------------------------------Question 1------------------------------------------------------
 Pone <- function(n, k, strategy, nreps) {
-  #Function to determine the probability that a single prisoner gest free using any one of the 3 given strategies 
+  #Function to determine the probability that a single prisoner gets free using any one of the 3 given strategies 
   #Arguements
   # n - number of boxes that can opened by one prisoner
   # k - the prisoner number
   # strategy - strategy used by the prisoners to get free. Can be 1,2 or 3
   # nreps - number of simulations
   
-  #--------------------CODE--------------------------------
+  #Returns
+  #Probability that a single prisoner got free
+  
+  #------------------------------------------------CODE---------------------------------------------------------
   freePrisoners = 0 #keeps track of the number of simulation in which prisoner number 'k' got free
   if(strategy == 1) {
     for(rep in 1:nreps) {
@@ -65,6 +69,8 @@ Pone <- function(n, k, strategy, nreps) {
   }
 }
 
+#---------------------------------------------Question 2----------------------------------------------------
+
 Pall <- function(n, strategy, nreps) {
   #Function to determine the probability that all prisoners get free using any one of the 3 given strategies 
   #Arguements
@@ -72,9 +78,10 @@ Pall <- function(n, strategy, nreps) {
   # strategy - strategy used by the prisoners to get free. Can be 1,2 or 3
   # nreps - number of simulations
   
-  #--------------------CODE--------------------------------
-  # escapedPrisoners = rep(0, nreps)
-  #freePrisoners = 0
+  #Returns
+  #Probability that all prisoners got free
+  
+  #---------------------------------------------CODE---------------------------------------------------------
   allPrisonersFree = 0 #keeps track of the number of simulations in which all prisoners got free
   if(strategy == 1) {
     for(rep in 1:nreps) {
@@ -90,18 +97,19 @@ Pall <- function(n, strategy, nreps) {
             break
           }
           else {
-            currentCard = cardsInBoxes[currentCard]
+            currentCard = cardsInBoxes[currentCard] #otherwise we go see the card and go to that box number
           }
         }
       }
       if(freePrisoners == (2*n)) {
-        allPrisonersFree = allPrisonersFree + 1
+        allPrisonersFree = allPrisonersFree + 1 #increment the count of simulation in which all prisoners got free by 1
       }
     }
-    return (allPrisonersFree/nreps)
+    return (allPrisonersFree/nreps) #return probability
   }
   else if(strategy == 2) {
     for(rep in 1:nreps) {
+      freePrisoners = 0
       cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE))
       #vector of length 2n with index representing the box number and the 
       #corresponding element representing the card number inside
@@ -114,25 +122,26 @@ Pall <- function(n, strategy, nreps) {
             break
           }
           else {
-            currentCard = cardsInBoxes[currentCard]
+            currentCard = cardsInBoxes[currentCard] #otherwise we go see the card and go to that box number
           }
         }
       }
       
       if(freePrisoners == (2*n)) {
-        allPrisonersFree = allPrisonersFree + 1
+        allPrisonersFree = allPrisonersFree + 1 #increment the count of simulation in which all prisoners got free by 1
       }
     }
-    return (allPrisonersFree/nreps)
+    return (allPrisonersFree/nreps) #return probability
   }
   else if(strategy == 3) {
     for(rep in 1:nreps) {
+      freePrisoners = 0
       cardsInBoxes <- c(sample(1 : (2*n), 2*n, replace = FALSE))
       #vector of length 2n with index representing the box number and the 
       #corresponding element representing the card number inside
       # nRandomBoxes <- c(sample(1 : (2*n), n, replace = FALSE))
       for(prisoner in 1:(2*n)) {
-        nRandomBoxes <- c(sample(1 : (2*n), n, replace = FALSE))
+        nRandomBoxes <- c(sample(1 : (2*n), n, replace = FALSE)) #selecting n raondom boxes out of 2n boxes
         for(box in nRandomBoxes) {
           if(cardsInBoxes[box] == prisoner) { #if the card that we got = the prisoner number => prisoner gets free
             freePrisoners = freePrisoners + 1
@@ -141,22 +150,39 @@ Pall <- function(n, strategy, nreps) {
         }
       }
       if(freePrisoners == (2*n)) {
-        allPrisonersFree = allPrisonersFree + 1
+        allPrisonersFree = allPrisonersFree + 1 #increment the count of simulation in which all prisoners got free by 1
       }
     }
-    return (allPrisonersFree/nreps)
+    return (allPrisonersFree/nreps) #return probability
   }
 }
 
+#---------------------------------------------Question 3-------------------------------------------------
+# running Pone for n=5 
+print(Pone(5, 4, 1, 10000))
+print(Pone(5, 4, 2, 10000))
+print(Pone(5, 4, 3, 10000))
+#running Pone for n=50
 print(Pone(50, 4, 1, 10000))
 print(Pone(50, 4, 2, 10000))
 print(Pone(50, 4, 3, 10000))
+#running Pall for n=5
+print(Pall(5, 1, 10000))
+print(Pall(5, 2, 10000))
+print(Pall(5, 3, 10000))
+# running Pall for n=50
 print(Pall(50, 1, 10000))
 print(Pall(50, 2, 10000))
 print(Pall(50, 3, 10000))
 
+#--------------------------------------Question 4-------------------------------------------
 
 
+
+
+
+
+#--------------------------------------Question 5-------------------------------------------
 dloop <- function(n, nreps) {
   # Function to to estimate, by simulation, the probability of each loop length from 1 to 2n 
   # occurring at least once in a random shuffling of cards to boxes
