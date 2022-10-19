@@ -62,10 +62,10 @@ Pone <- function(n, k, strategy, nreps) {
         }
       }
     }
-    return (freePrisoners/nreps)
+    return (freePrisoners/nreps) #return probability
   }
   else {
-    return (0.0)
+    return (0.0) #because wronf strategy has been entered
   }
 }
 
@@ -210,7 +210,7 @@ dloop <- function(n, nreps) {
         maxIterations = maxIterations - 1 #decrease iterations by 1 becasue 1 box has been opened
       }
       if(currentLength != 0) {
-        cycleLengthFound[currentLength] = TRUE 
+        cycleLengthFound[currentLength] = TRUE #if length found then we chnage the element at that index to True
       }
     }
     for(i in 1:(2*n)) {
