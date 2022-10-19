@@ -154,7 +154,7 @@ Pall <- function(n, strategy, nreps) {
 
 ####################################################################################################################################################
 
-##question 4 logic 
+##question 4 
 
 dloop=function(n,nreps=10000)
 { result_vector=array(0,dim=(2*n))
