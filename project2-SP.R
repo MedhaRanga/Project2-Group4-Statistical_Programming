@@ -1,74 +1,149 @@
 #1.   
 # Function to find P(single prisoner succeeding in finding their number)  
 
-Pone <- function(n=3,k=6,strategy,nreps){
-  success_count<-0
-  failure_count<-0
-  prob_success<- 1/(2*n)
-  prob_failure<- 1 - prob_success
-  number_of_attempts<-1
-  mat<- matrix(replicate(nreps,sample(1:(2*n),(2*n))),2*n,nreps)
-  if (strategy == 1){
-    # Rows: numbers in box
-    # 1 columns: 1 replicate
-    
-    for (i in 1:nreps){  
-      p<- k
-      while (number_of_attempts < n+1 & success_count != 1 ){
-        print(number_of_attempts)
-        new_no= mat[p,i] 
-        print("p")
-        print(p)
-        print("new_no")
-        print(new_no)
-        if (p != new_no) {
-          p = new_no
-          failure_count<- failure_count + 1
-          number_of_attempts<-number_of_attempts+1
+Pone <- function(n, k, strategy, nreps) {
+  Success_count = 0 
+  if(strategy == 1){
+    for(rep in 1:nreps) {
+      card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE))
+      currentCard = card_number[k];
+      for(i in 1:n) {
+        if(currentCard == k){
+          Success_count = Success_count+1 
+          break
         }
-        else {
-          success_count <- success_count + 1
+        else { 
+          currentCard = card_number[currentCard] 
         }
       }
-      print("Simulation :")
-      print(i)
-      print("success count is")
-      print(success_count)
-      print("failure count is")
-      print(failure_count)
-      cat("prob of prisoner",k,"for simulation",i,"is")
-      total_prob<- (prob_success**success_count)*(prob_failure**failure_count)
-      print(total_prob)
-      print(success_count/(success_count+failure_count))
+    return (Success_count/nreps) 
     }
   }
-  else if (strategy ==2 )
+  else if(strategy == 2) 
   {
-    p<- sample(1:(2*n),1)
-    for (i in 1:nreps){  
-      while (number_of_attempts < n+1 & success_count != 1 ){
-        print(number_of_attempts)
-        new_no= mat[p,i] 
-        if (p != new_no) {
-          p = new_no
-          failure_count<- failure_count + 1
-          number_of_attempts<-number_of_attempts+1
+    for(rep in 1:nreps){
+      card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE))
+      opening_Box <- sample(1: (2*n), 1) 
+      currentCard = card_number[opening_Box]
+      for(i in 1:n) 
+      {
+        if(currentCard == opening_Box){
+          Success_count = Success_count+1 
+          break
         }
         else {
-          success_count <- success_count + 1
+          currentCard = card_number[currentCard]
         }
       }
-      print("Simulation :")
-      print(i)
-      print("success count is")
-      print(success_count)
-      print("failure count is")
-      print(failure_count)
-      print("total attempts")
-      print(number_of_attempts)
-      cat("prob of prisoner",k,"for simulation",i,"is")
-      total_prob<- (prob_success**success_count)*(prob_failure**failure_count)
-      print(total_prob)
+    return (Success_count/nreps) 
     }
+  }
+  else if(strategy == 3) {
+    for(rep in 1:nreps) 
+    {
+      card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE))
+      nBoxes <- c(sample(1 : (2*n), n, replace = FALSE))
+      for(j in nBoxes) 
+      {
+        if(card_number[j] == n)
+         { 
+          Success_count = Success_count + 1
+          break
+        }
+      }
+    }  
+    return (Success_count/nreps)
+  }
+  else {
+    return (0.0)
   }
 }
+
+#2. 
+# Function to find P(all prisoners finding their number and getting free) 
+
+Pall <- function(n, strategy, nreps) {
+  all_Free = 0 
+  if(strategy == 1) {
+    for(rep in 1:nreps) {
+      card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE))
+      Success_count = 0
+      for(p in 1: (2*n)) {
+        currentCard = card_number[p] 
+        for(i in 1:n) {
+          if(currentCard == p) {
+            Success_count = Success_count + 1
+            break
+          }
+          else {
+            currentCard = card_number[currentCard]
+          }
+        }
+      }
+      if(Success_count == (2*n)) {
+        all_Free = all_Free + 1
+      }
+    return (all_Free/nreps)
+  }
+  }
+  else if(strategy == 2) {
+    for(rep in 1:nreps) {
+      card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE))
+      Success_count = 0
+      for(p in 1: (2*n)) {
+        presentBox = sample(1 : (2*n), 1)
+        currentCard = card_number[presentBox]
+        for(i in 1:n) {
+          if(currentCard == p) { 
+            Success_count = Success_count + 1
+            break
+          }
+          else {
+            currentCard = card_number[currentCard]
+          }
+        }
+      }
+      if(Success_count == (2*n)) {
+        all_Free = all_Free + 1
+      }
+    }
+    return (all_Free/nreps)
+  }
+  else if(strategy == 3) {
+    for(rep in 1:nreps) {
+      card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE))
+      Success_count = 0
+      for(p in 1:(2*n)) {
+        nBoxes <- c(sample(1 : (2*n), n, replace = FALSE))
+        for(j in nBoxes) {
+          if(card_number[j] == p) { 
+            Success_count = Success_count + 1
+            break
+          }
+        }
+      }
+      if(Success_count == (2*n)) {
+        all_Free = all_Free + 1
+      }
+    }
+    return (all_Free/nreps)
+  }
+}
+
+#3. 
+#When n = 5
+print(Pone(5, 3, 1, 10000))
+print(Pone(5, 3, 2, 10000))
+print(Pone(5, 3, 3, 10000))
+print(Pall(5, 1, 10000))
+print(Pall(5, 2, 10000))
+print(Pall(5, 3, 10000))
+#When n = 50
+print(Pone(50, 20, 1, 10000))
+print(Pone(50, 20, 2, 10000))
+print(Pone(50, 20, 3, 10000))
+print(Pall(50, 1, 10000))
+print(Pall(50, 2, 10000))
+print(Pall(50, 3, 10000))
+
+
