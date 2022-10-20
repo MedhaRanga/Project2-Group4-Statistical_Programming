@@ -146,3 +146,36 @@ print(Pall(50, 2, 10000))
 print(Pall(50, 3, 10000))
 
 
+#5
+dloop <- function(n, nreps) {
+  Success_Vector <- rep(0, (2*n)) 
+  for(rep in 1:nreps) {  
+    card_number <- c(sample(1 : (2*n), 2*n, replace = FALSE)) 
+    cycleLengthFound <- rep(F, (2*n))
+    for(j in 1:(2*n)) {
+      currentLength = 0 
+      currentCard = card_number[j] 
+      max_boxes_open = n 
+      
+      while(currentCard != j && max_boxes_open > 0) {
+        currentCard = card_number[currentCard]
+        currentLength = currentLength + 1 
+        max_boxes_open = max_boxes_open - 1 
+      }
+      if(currentLength != 0) {
+        cycleLengthFound[currentLength] = TRUE 
+      }
+    }
+    for(i in 1:(2*n)) {
+      if(cycleLengthFound[i]) { 
+        Success_Vector[i] = Success_Vector[i] + 1 
+      }
+    }
+  }
+  final_vector <- c(rep(0, (2*n)))
+  for(i in 1:(2*n)) {
+    final_vector[i] = Success_Vector[i]/nreps 
+  
+  }
+  return (final_vector)
+}
